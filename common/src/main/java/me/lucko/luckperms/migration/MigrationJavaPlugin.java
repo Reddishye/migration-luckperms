@@ -25,12 +25,40 @@
 
 package me.lucko.luckperms.migration;
 
+import net.luckperms.api.LuckPerms;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public abstract class MigrationJavaPlugin extends JavaPlugin {
+
+    private LuckPerms luckPerms;
+
+    @Override
+    public final void onEnable() {
+        getLogger().info("-------------------------------------------");
+        getLogger().info("      LuckPerms Migration Plugin");
+        getLogger().info("      Version: " + getDescription().getVersion());
+        getLogger().info("-------------------------------------------");
+
+        this.luckPerms = getServer().getServicesManager().load(LuckPerms.class);
+
+        if (luckPerms == null) {
+            RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
+            if (provider != null) {
+                luckPerms = provider.getProvider();
+            }
+        }
+
+        if (luckPerms == null) {
+            log(null, "Error: LuckPerms either not loaded or not found by the migration plugin. Make sure LuckPerms is installed and enabled!");
+        }
+
+        onPluginStartup();
+    }
 
     @Override
     public final boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -41,10 +69,18 @@ public abstract class MigrationJavaPlugin extends JavaPlugin {
     protected abstract void runMigration(CommandSender sender, String[] args);
 
     protected void log(CommandSender sender, String msg) {
-        getLogger().info(msg);
-        if (!(sender instanceof ConsoleCommandSender)) {
+        if (sender != null && !(sender instanceof ConsoleCommandSender)) {
             sender.sendMessage("[migration] " + msg);
+        } else {
+            getLogger().info("[migration] " + msg);
         }
     }
 
+    public LuckPerms getLuckPerms() {
+        return luckPerms;
+    }
+
+    protected void onPluginStartup() {
+        // do nothing
+    }
 }

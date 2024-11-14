@@ -1,0 +1,34 @@
+apply plugin: 'com.gradleup.shadow'
+
+repositories {
+    maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+    maven { url = 'https://repo.lucko.me/' }
+
+    maven { url = "https://maven.refinedev.xyz/public-repo" }
+    maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
+}
+
+dependencies {
+    implementation project(':common')
+    compileOnly 'org.bukkit:bukkit:1.15.2-R0.1-SNAPSHOT'
+
+    compileOnly 'xyz.refinedev.phoenix:pxAPI:1.7.5.1'
+    implementation 'org.mongodb:mongodb-driver-sync:5.2.0'
+    implementation 'org.mongodb:mongodb-driver-core:5.2.1'
+    implementation 'org.mongodb:bson:5.2.1'
+}
+
+shadowJar {
+    dependencies {
+        include(dependency(':common'))
+        include(dependency('org.mongodb:mongodb-driver-sync'))
+        include(dependency('org.mongodb:mongodb-driver-core'))
+        include(dependency('org.mongodb:bson'))
+    }
+
+    archiveBaseName.set('luckperms-migration-phoenix')
+    archiveVersion.set('')
+    archiveClassifier.set('')
+}
+
+tasks.build.dependsOn tasks.shadowJar

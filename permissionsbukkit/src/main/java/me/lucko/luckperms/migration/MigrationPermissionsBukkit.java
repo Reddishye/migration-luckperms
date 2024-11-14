@@ -48,13 +48,13 @@ public final class MigrationPermissionsBukkit extends MigrationJavaPlugin {
     private PermissionsPlugin permissionsBukkit;
 
     @Override
-    public void onEnable() {
-        this.luckPerms = getServer().getServicesManager().load(LuckPerms.class);
+    public void onPluginStartup() {
         this.permissionsBukkit = JavaPlugin.getPlugin(PermissionsPlugin.class);
     }
 
     @Override
     public void runMigration(CommandSender sender, String[] args) {
+        luckPerms = getLuckPerms();
         log(sender, "Starting.");
 
         FileConfiguration config = permissionsBukkit.getConfig();

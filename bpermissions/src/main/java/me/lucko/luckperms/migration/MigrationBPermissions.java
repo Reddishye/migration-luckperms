@@ -56,12 +56,8 @@ public final class MigrationBPermissions extends MigrationJavaPlugin {
     private LuckPerms luckPerms;
 
     @Override
-    public void onEnable() {
-        this.luckPerms = getServer().getServicesManager().load(LuckPerms.class);
-    }
-
-    @Override
     public void runMigration(CommandSender sender, String[] args) {
+        luckPerms = getLuckPerms();
         log(sender, "Starting.");
 
         WorldManager worldManager = WorldManager.getInstance();

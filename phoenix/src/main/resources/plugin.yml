@@ -1,0 +1,13 @@
+name: luckperms-migration-phoenix
+version: 1
+main: me.lucko.luckperms.migration.MigrationPhoenix
+api-version: 1.13
+depend: [LuckPerms]
+
+commands:
+  migrate-phoenix:
+    permission: luckperms.migration
+
+permissions:
+  luckperms.migration:
+    default: op

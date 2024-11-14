@@ -49,13 +49,13 @@ public final class MigrationPowerRanks extends MigrationJavaPlugin {
     private PowerRanks pr;
 
     @Override
-    public void onEnable() {
-        this.luckPerms = getServer().getServicesManager().load(LuckPerms.class);
+    public void onPluginStartup() {
         this.pr = JavaPlugin.getPlugin(PowerRanks.class);
     }
 
     @Override
     public void runMigration(CommandSender sender, String[] args) {
+        luckPerms = getLuckPerms();
         log(sender, "Starting.");
 
         PowerRanksAPI prApi = pr.loadAPI();

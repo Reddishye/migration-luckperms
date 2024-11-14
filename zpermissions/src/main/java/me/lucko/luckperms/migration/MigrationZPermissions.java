@@ -57,12 +57,8 @@ public final class MigrationZPermissions extends MigrationJavaPlugin {
     private LuckPerms luckPerms;
 
     @Override
-    public void onEnable() {
-        this.luckPerms = getServer().getServicesManager().load(LuckPerms.class);
-    }
-
-    @Override
     public void runMigration(CommandSender sender, String[] args) {
+        luckPerms = getLuckPerms();
         log(sender, "Starting.");
 
         ZPermissionsService service = getServer().getServicesManager().load(ZPermissionsService.class);

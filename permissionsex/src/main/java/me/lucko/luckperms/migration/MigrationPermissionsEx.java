@@ -70,13 +70,13 @@ public final class MigrationPermissionsEx extends MigrationJavaPlugin {
     private PermissionsEx pex;
 
     @Override
-    public void onEnable() {
-        this.luckPerms = getServer().getServicesManager().load(LuckPerms.class);
+    public void onPluginStartup() {
         this.pex = JavaPlugin.getPlugin(PermissionsEx.class);
     }
 
     @Override
     public void runMigration(CommandSender sender, String[] args) {
+        luckPerms = getLuckPerms();
         log(sender, "Starting.");
 
         if (!getServer().getPluginManager().isPluginEnabled("PermissionsEx")) {

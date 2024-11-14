@@ -58,13 +58,13 @@ public final class MigrationGroupManager extends MigrationJavaPlugin {
     private GroupManager gm;
 
     @Override
-    public void onEnable() {
-        this.luckPerms = getServer().getServicesManager().load(LuckPerms.class);
+    public void onPluginStartup() {
         this.gm = JavaPlugin.getPlugin(GroupManager.class);
     }
 
     @Override
     public void runMigration(CommandSender sender, String[] args) {
+        luckPerms = getLuckPerms();
         log(sender, "Starting.");
 
         final boolean migrateAsGlobal;
