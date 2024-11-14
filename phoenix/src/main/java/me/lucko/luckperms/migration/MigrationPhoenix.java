@@ -148,7 +148,7 @@ public class MigrationPhoenix extends MigrationJavaPlugin {
             }
 
             if (displayName != null && !displayName.isEmpty()) {
-                lpGroup.data().add(Node.builder("meta.displayname." + displayName).build());
+                lpGroup.data().add(Node.builder("displayname." + displayName).build());
                 System.out.println("Set display name: " + displayName + " for group: " + rankName);
             }
 
